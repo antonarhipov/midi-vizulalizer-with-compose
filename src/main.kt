@@ -21,7 +21,7 @@ const val midiDeviceName = "MPKmini2"
 
 fun main() = application {
     val flow = MutableStateFlow<MidiMessage>(DummyMidiMessage)
-    publishMidiMessage(flow)
+    receiveMidiMessages(flow)
 
     Window(
         onCloseRequest = ::exitApplication,
@@ -38,7 +38,7 @@ fun main() = application {
     }
 }
 
-fun publishMidiMessage(flow: MutableStateFlow<MidiMessage>) {
+fun receiveMidiMessages(flow: MutableStateFlow<MidiMessage>) {
     System.setProperty("javax.sound.midi.Transmitter", "javax.sound.midi.Transmitter#$midiDeviceName")
     MidiSystem.getTransmitter().receiver = object : Receiver {
         override fun send(message: MidiMessage, timeStamp: Long) {
